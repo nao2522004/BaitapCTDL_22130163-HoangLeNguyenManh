@@ -96,40 +96,57 @@ public class Task2_2_Sort {
 	}
 
 	private static void qickSort3(int[] a) {
-		if (a.length <= 1) {
-			return;
-		}
+    if (a.length <= 1) {
+        return;
+    }
 
-		qickSort_Random(a, 0, a.length - 1);
+    qickSort_Random(a, 0, a.length - 1);
+}
 
-	}
+private static void qickSort_Random(int[] a, int l, int r) {
+    if (l < r) {
+        // b1: Chọn chốt
+        int pivotIndex = getPivot_Random(l, r);
+        int pivot = a[pivotIndex];
 
-	private static void qickSort_Random(int[] a, int l, int r) {
-		if (l < r) {
-			return;
-		} else {
-			// b1 : chọn chốt
-			int pivotIndex = getPivot_Random(l, r);
-			int pivot = a[pivotIndex];
+        // Hoán đổi chốt với phần tử cuối cùng
+        int temp = a[pivotIndex];
+        a[pivotIndex] = a[r];
+        a[r] = temp;
 
-			// Hoán đổi chốt với phần tử cuối cùng
-			int temp = a[pivotIndex];
-			a[pivotIndex] = a[r];
-			a[r] = temp;
-			// b2 : phân bố lại mảng
-			int k = getPivot_Last(a, l, r, pivot);
+        // b2: Phân bố lại mảng
+        int k = partition(a, l, r, pivot);
 
-			// b3 : chia đôi mảng và lặp lại.
-			qickSort_Last(a, l, k - 1);
-			qickSort_Last(a, k, r);
-		}
-	}
+        // b3: Chia đôi mảng và lặp lại
+        qickSort_Random(a, l, k - 1);
+        qickSort_Random(a, k + 1, r);
+    }
+}
 
-	// return pivotvalue (k)
-	public static int getPivot_Random(int l, int r) {
-		Random rand = new Random();
-		return rand.nextInt(r - l + 1) + l;
-	}
+// Return pivot value (k)
+public static int getPivot_Random(int l, int r) {
+    Random rand = new Random();
+    return rand.nextInt(r - l + 1) + l;
+}
+
+private static int partition(int[] a, int l, int r, int pivot) {
+    int i = l - 1;
+    for (int j = l; j < r; j++) {
+        if (a[j] <= pivot) {
+            i++;
+            // Swap a[i] and a[j]
+            int temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    }
+    // Swap a[i + 1] and a[r] (put the pivot in its correct position)
+    int temp = a[i + 1];
+    a[i + 1] = a[r];
+    a[r] = temp;
+    return i + 1;
+}
+
 	
 	
 	
