@@ -95,57 +95,55 @@ public class Task2_2_Sort {
 		return il;
 	}
 
-	private static void qickSort3(int[] a) {
-    if (a.length <= 1) {
-        return;
-    }
+	
 
-    qickSort_Random(a, 0, a.length - 1);
-}
+	
+	    public static void quickSort(int[] a) {
+	        if (a.length <= 1) {
+	            return;
+	        }
+	        quickSortRandom(a, 0, a.length - 1);
+	    }
 
-private static void qickSort_Random(int[] a, int l, int r) {
-    if (l < r) {
-        // b1: Chọn chốt
-        int pivotIndex = getPivot_Random(l, r);
-        int pivot = a[pivotIndex];
+	    private static void quickSortRandom(int[] a, int l, int r) {
+	        if (l < r) {
+	            int pivotIndex = getPivotRandom(l, r);
+	            int k = partition(a, l, r, pivotIndex);
+	            quickSortRandom(a, l, k - 1);
+	            quickSortRandom(a, k + 1, r);
+	        }
+	    }
 
-        // Hoán đổi chốt với phần tử cuối cùng
-        int temp = a[pivotIndex];
-        a[pivotIndex] = a[r];
-        a[r] = temp;
+	    public static int getPivotRandom(int l, int r) {
+	        Random rand = new Random();
+	        return rand.nextInt(r - l + 1) + l;
+	    }
 
-        // b2: Phân bố lại mảng
-        int k = partition(a, l, r, pivot);
+	    private static int partition(int[] a, int l, int r, int pivotIndex) {
+	        int pivotValue = a[pivotIndex];
+	        // Swap pivot element with the last element
+	        int temp = a[r];
+	        a[r] = a[pivotIndex];
+	        a[pivotIndex] = temp;
 
-        // b3: Chia đôi mảng và lặp lại
-        qickSort_Random(a, l, k - 1);
-        qickSort_Random(a, k + 1, r);
-    }
-}
+	        int i = l - 1;
+	        for (int j = l; j < r; j++) {
+	            if (a[j] <= pivotValue) {
+	                i++;
+	                // Swap a[i] and a[j]
+	                temp = a[i];
+	                a[i] = a[j];
+	                a[j] = temp;
+	            }
+	        }
+	        // Swap a[i + 1] and pivot (put the pivot in its correct position)
+	        temp = a[i + 1];
+	        a[i + 1] = a[r];
+	        a[r] = temp;
+	        return i + 1;
+	    }
 
-// Return pivot value (k)
-public static int getPivot_Random(int l, int r) {
-    Random rand = new Random();
-    return rand.nextInt(r - l + 1) + l;
-}
-
-private static int partition(int[] a, int l, int r, int pivot) {
-    int i = l - 1;
-    for (int j = l; j < r; j++) {
-        if (a[j] <= pivot) {
-            i++;
-            // Swap a[i] and a[j]
-            int temp = a[i];
-            a[i] = a[j];
-            a[j] = temp;
-        }
-    }
-    // Swap a[i + 1] and a[r] (put the pivot in its correct position)
-    int temp = a[i + 1];
-    a[i + 1] = a[r];
-    a[r] = temp;
-    return i + 1;
-}
+	  
 
 	
 	
