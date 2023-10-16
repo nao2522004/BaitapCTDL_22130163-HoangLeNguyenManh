@@ -98,28 +98,28 @@ public class Task2_2_Sort {
 	
 
 	
-	    public static void quickSort(int[] a) {
+	    public static void quickSort3(int[] a) {
 	        if (a.length <= 1) {
 	            return;
 	        }
 	        quickSortRandom(a, 0, a.length - 1);
 	    }
 
-	    private static void quickSortRandom(int[] a, int l, int r) {
+	    public static void quickSortRandom(int[] a, int l, int r) {
 	        if (l < r) {
-	            int pivotIndex = getPivotRandom(l, r);
+	            int pivotIndex = getPivot_Random(l, r);
 	            int k = partition(a, l, r, pivotIndex);
 	            quickSortRandom(a, l, k - 1);
 	            quickSortRandom(a, k + 1, r);
 	        }
 	    }
 
-	    public static int getPivotRandom(int l, int r) {
+	    private static int getPivot_Random(int l, int r) {
 	        Random rand = new Random();
 	        return rand.nextInt(r - l + 1) + l;
 	    }
 
-	    private static int partition(int[] a, int l, int r, int pivotIndex) {
+	    public static int partition(int[] a, int l, int r, int pivotIndex) {
 	        int pivotValue = a[pivotIndex];
 	        // Swap pivot element with the last element
 	        int temp = a[r];
