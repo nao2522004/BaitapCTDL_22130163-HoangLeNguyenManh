@@ -75,22 +75,18 @@ public class MyWordCount {
 	// data/hamlet.txt (or fit.txt) according ascending order of tokens
 	// Example: An - 3, Bug - 10, ...
 	public Set<WordCount> printWordCounts() {
-	    Comparator<WordCount> compareTo = new Comparator<WordCount>() {
-	        @Override
-	        public int compare(WordCount o1, WordCount o2) {
-	            int countCompare = o1.getCount() - o2.getCount();
-	            if (countCompare != 0) {
-	                return countCompare;
-	            }
-	            return o1.getWord().compareTo(o2.getWord());
-	        }
-	    };
+		Comparator<WordCount> compareTo = new Comparator<WordCount>() {
+			@Override
+			public int compare(WordCount o1, WordCount o2) {
+				return o1.getWord().compareTo(o2.getWord());
 
-	    
-	    Set<WordCount> wordCountsSet = new TreeSet<>(compareTo);
-	    wordCountsSet.addAll(getWordCounts());
+			}
+		};
 
-	    return wordCountsSet;
+		Set<WordCount> wordCountsSet = new TreeSet<>(compareTo);
+		wordCountsSet.addAll(getWordCounts());
+
+		return wordCountsSet;
 	}
 
 
