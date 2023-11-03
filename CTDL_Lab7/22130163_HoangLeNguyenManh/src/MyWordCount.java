@@ -78,28 +78,21 @@ public class MyWordCount {
 	    Comparator<WordCount> compareTo = new Comparator<WordCount>() {
 	        @Override
 	        public int compare(WordCount o1, WordCount o2) {
-	            return o1.getCount() - o2.getCount();
+	            int countCompare = o1.getCount() - o2.getCount();
+	            if (countCompare != 0) {
+	                return countCompare;
+	            }
+	            return o1.getWord().compareTo(o2.getWord());
 	        }
 	    };
 
-	    // Sử dụng một TreeSet với Comparator để sắp xếp theo count tăng dần
-	    Set<WordCount> sortedSet = new TreeSet<>(compareTo);
+	    
+	    Set<WordCount> wordCountsSet = new TreeSet<>(compareTo);
+	    wordCountsSet.addAll(getWordCounts());
 
-	    // Lấy danh sách các WordCount ban đầu từ getWordCounts()
-	    List<WordCount> originalWordCounts = getWordCounts();
-
-	    // Duyệt danh sách ban đầu
-	    for (WordCount wordCount : originalWordCounts) {
-	        sortedSet.add(wordCount);
-	    }
-
-	    // In ra kết quả
-	    for (WordCount wordCount : sortedSet) {
-	        System.out.println(wordCount.getWord() + " - " + wordCount.getCount());
-	    }
-
-	    return sortedSet;
+	    return wordCountsSet;
 	}
+
 
 
 	// Prints out the number of times each unique token appears in the file
@@ -107,12 +100,17 @@ public class MyWordCount {
 	// Example: Bug - 10, An - 3, Nam - 2.
 	public Set<WordCount> exportWordCountsByOccurence() {
 		Comparator<WordCount> compareTo = new Comparator<WordCount>() {
+	        @Override
+	        public int compare(WordCount o1, WordCount o2) {
+	            int countCompare = o1.getCount() - o2.getCount();
+	            if (countCompare != 0) {
+	                return countCompare;
+	            }
+	            return o1.getWord().compareTo(o2.getWord());
+	        }
+	    };
 
-			@Override
-			public int compare(WordCount o1, WordCount o2) {
-				return o1.getCount() - o2.getCount();
-			}
-		};
+	   
 		Set<WordCount> newSet = new TreeSet<>(compareTo.reversed());
 		newSet.addAll(getWordCounts());
 		return newSet;
