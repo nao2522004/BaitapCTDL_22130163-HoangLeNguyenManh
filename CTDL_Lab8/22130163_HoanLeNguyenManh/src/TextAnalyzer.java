@@ -68,23 +68,26 @@ public class TextAnalyzer {
 	}
 
 	// This method will display the content of the text file stored in the map
-	public void displayText() throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader("data/short.txt"));
-		String line = null;
-		while (true) {
-			line = reader.readLine();
-
-			if (line == null)
-				break;
-			StringTokenizer tokens = new StringTokenizer(line, " ");
-
-			while (tokens.hasMoreTokens()) {
-				System.out.print(tokens.nextToken() + " ");
-			}
-			System.out.println();
+	public void displayText() {
+		int index = 1;
+		int max = 0;
+		for (String key : map.keySet()) {
+			max += map.get(key).size();
 		}
-		reader.close();
+		while (index < max) {
+			for (String key : map.keySet()) {
+				if (map.get(key).contains(index)) {
+					System.out.print(key + " ");
+					index++;
+				} else if (map.get(key).contains(-index)) {
+					System.out.print(key + " ");
+					System.out.println();
+					index++;
+				}
+			}
+		}
 	}
+
 
 	public String mostFrequentWord() {
 		String mostFrequentWord = null;
